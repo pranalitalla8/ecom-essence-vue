@@ -10,6 +10,9 @@ import Dashboard from "./pages/Dashboard";
 import Auctions from "./pages/Auctions";
 import CreateListing from "./pages/CreateListing";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +29,9 @@ const App = () => (
               <Header />
               <main className="flex-1 p-6">
                 <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/auctions" element={<Auctions />} />
                   <Route path="/create-listing" element={<CreateListing />} />

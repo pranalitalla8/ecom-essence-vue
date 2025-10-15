@@ -44,6 +44,12 @@ All colors MUST be HSL.
     --purple: 271 91% 65%;
     --purple-foreground: 0 0% 98%;
 
+    --pastel-blue: 210 100% 92%;
+    --pastel-pink: 350 100% 92%;
+    --pastel-lavender: 270 60% 92%;
+    --pastel-mint: 150 60% 92%;
+    --pastel-peach: 25 100% 90%;
+
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
@@ -96,6 +102,12 @@ All colors MUST be HSL.
 
     --purple: 271 91% 65%;
     --purple-foreground: 0 0% 98%;
+
+    --pastel-blue: 210 80% 25%;
+    --pastel-pink: 350 70% 25%;
+    --pastel-lavender: 270 50% 30%;
+    --pastel-mint: 150 50% 30%;
+    --pastel-peach: 25 80% 30%;
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
