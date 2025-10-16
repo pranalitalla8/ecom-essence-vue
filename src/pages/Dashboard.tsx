@@ -2,7 +2,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatCard } from "@/components/StatCard";
 import { Progress } from "@/components/ui/progress";
-import { DollarSign, Package, Users, TrendingUp, Upload, FileUp, ChevronRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+import { 
+  DollarSign, 
+  Package, 
+  Users, 
+  TrendingUp, 
+  Upload, 
+  ChevronRight,
+  Gavel,
+  Eye,
+  Clock,
+  BarChart3
+} from "lucide-react";
 
 export default function Dashboard() {
   const setupSteps = [
@@ -17,17 +30,44 @@ export default function Dashboard() {
   const completedSteps = setupSteps.filter(step => step.completed).length;
   const progress = (completedSteps / setupSteps.length) * 100;
 
+  const activeAuctions = [
+    {
+      id: 1,
+      title: "Vintage Camera Collection",
+      image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=300&fit=crop",
+      currentBid: "$1,250",
+      startingBid: "$500",
+      endTime: "2h 15m",
+      bidders: 8,
+      views: 156,
+      status: "active"
+    },
+    {
+      id: 2,
+      title: "Antique Pocket Watch",
+      image: "https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=400&h=300&fit=crop",
+      currentBid: "$890",
+      startingBid: "$300",
+      endTime: "45m",
+      bidders: 12,
+      views: 234,
+      status: "ending-soon"
+    }
+  ];
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 animate-fade-in">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Get ready to sell!</h1>
-          <p className="text-muted-foreground mt-1">Here's a guide to get your auction house up and running.</p>
+          <h1 className="text-3xl font-bold">Seller Dashboard</h1>
+          <p className="text-muted-foreground mt-1">Manage your auctions and track your performance</p>
         </div>
-        <Button>
-          <Upload className="mr-2 h-4 w-4" />
-          Add Product
-        </Button>
+        <Link to="/create-listing">
+          <Button className="rounded-full">
+            <Upload className="mr-2 h-4 w-4" />
+            Create Auction
+          </Button>
+        </Link>
       </div>
 
       <Card>
@@ -86,57 +126,121 @@ export default function Dashboard() {
         />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-          <CardContent className="flex items-center justify-between p-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Package className="h-6 w-6" />
-              </div>
-              <div>
-                <h3 className="font-semibold">Start an Auction</h3>
-                <p className="text-sm text-muted-foreground">Add your first products and start selling</p>
-              </div>
+      {/* Active Auctions */}
+      <Card className="border-0 bg-card/50 backdrop-blur-sm">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Your Active Auctions</CardTitle>
+              <CardDescription>Monitor and manage your live listings</CardDescription>
             </div>
-            <ChevronRight className="h-5 w-5 text-muted-foreground" />
-          </CardContent>
-        </Card>
+            <Link to="/auctions">
+              <Button variant="outline" className="rounded-full">
+                <BarChart3 className="mr-2 h-4 w-4" />
+                View All
+              </Button>
+            </Link>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-4">
+            {activeAuctions.map((auction) => (
+              <Card key={auction.id} className="overflow-hidden border-0 bg-gradient-to-br from-card to-card/50 hover:shadow-lg transition-all duration-300 group">
+                <div className="relative">
+                  <img 
+                    src={auction.image} 
+                    alt={auction.title}
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <Badge className={`absolute top-3 left-3 rounded-full ${
+                    auction.status === 'ending-soon' 
+                      ? 'bg-warning/90 text-warning-foreground' 
+                      : 'bg-success/90 text-success-foreground'
+                  }`}>
+                    {auction.status === 'ending-soon' ? '⚡ Ending Soon' : '✓ Active'}
+                  </Badge>
+                  <div className="absolute top-3 right-3 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span className="text-xs font-medium">{auction.endTime}</span>
+                  </div>
+                </div>
+                
+                <CardContent className="p-4 space-y-3">
+                  <h3 className="font-semibold text-lg">{auction.title}</h3>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-xs text-muted-foreground">Starting Bid</p>
+                      <p className="text-sm font-medium">{auction.startingBid}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Current Bid</p>
+                      <p className="text-lg font-bold text-success">{auction.currentBid}</p>
+                    </div>
+                  </div>
 
-        <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-          <CardContent className="flex items-center justify-between p-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-muted">
-                <FileUp className="h-6 w-6" />
+                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t">
+                    <span className="flex items-center gap-1">
+                      <Users className="w-3 h-3" />
+                      {auction.bidders} bidders
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Eye className="w-3 h-3" />
+                      {auction.views} views
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Actions */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <Link to="/create-listing">
+          <Card className="cursor-pointer hover:bg-accent/50 transition-all duration-300 hover:shadow-lg border-0 bg-gradient-to-br from-pastel-mint/20 to-pastel-blue/20 backdrop-blur-sm">
+            <CardContent className="flex items-center gap-4 p-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+                <Gavel className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold">Sell online using a template</h3>
-                <p className="text-sm text-muted-foreground">Choose from pre-made templates</p>
+                <h3 className="font-semibold">Create Auction</h3>
+                <p className="text-xs text-muted-foreground">List a new item</p>
               </div>
+              <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/auctions">
+          <Card className="cursor-pointer hover:bg-accent/50 transition-all duration-300 hover:shadow-lg border-0 bg-gradient-to-br from-pastel-lavender/20 to-pastel-pink/20 backdrop-blur-sm">
+            <CardContent className="flex items-center gap-4 p-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-info/10">
+                <Package className="h-6 w-6 text-info" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Manage Listings</h3>
+                <p className="text-xs text-muted-foreground">Edit your auctions</p>
+              </div>
+              <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Card className="cursor-pointer hover:bg-accent/50 transition-all duration-300 hover:shadow-lg border-0 bg-gradient-to-br from-pastel-peach/20 to-pastel-pink/20 backdrop-blur-sm">
+          <CardContent className="flex items-center gap-4 p-6">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-warning/10">
+              <BarChart3 className="h-6 w-6 text-warning" />
             </div>
-            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            <div>
+              <h3 className="font-semibold">View Analytics</h3>
+              <p className="text-xs text-muted-foreground">Track performance</p>
+            </div>
+            <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
           </CardContent>
         </Card>
       </div>
-
-      <Card>
-        <CardHeader>
-          <h3 className="font-semibold">Quick tasks:</h3>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-2">
-          <Button variant="link" className="h-auto p-0 text-sm">
-            <ChevronRight className="mr-1 h-3 w-3" />
-            Add your first auction listing
-          </Button>
-          <Button variant="link" className="h-auto p-0 text-sm">
-            <ChevronRight className="mr-1 h-3 w-3" />
-            Manage your auction
-          </Button>
-          <Button variant="link" className="h-auto p-0 text-sm">
-            <ChevronRight className="mr-1 h-3 w-3" />
-            Manage your services
-          </Button>
-        </CardContent>
-      </Card>
     </div>
   );
 }

@@ -20,32 +20,80 @@ export default function Index() {
     {
       id: 1,
       title: "Vintage Art Collection",
+      seller: "ArtCollector_Pro",
+      sellerRating: 4.8,
       image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400&h=300&fit=crop",
       currentBid: "$2,450",
       endTime: "2h 15m",
       bidders: 12,
       views: 234,
-      watchers: 45
+      watchers: 45,
+      category: "Art"
     },
     {
       id: 2,
       title: "Rare Collectible Coins",
+      seller: "CoinMaster_88",
+      sellerRating: 4.9,
       image: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=400&h=300&fit=crop",
       currentBid: "$890",
       endTime: "5h 30m",
       bidders: 8,
       views: 156,
-      watchers: 28
+      watchers: 28,
+      category: "Collectibles"
     },
     {
       id: 3,
       title: "Designer Furniture Set",
+      seller: "LuxuryHome_Finds",
+      sellerRating: 4.7,
       image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop",
       currentBid: "$3,200",
       endTime: "1d 3h",
       bidders: 15,
       views: 412,
-      watchers: 67
+      watchers: 67,
+      category: "Furniture"
+    },
+    {
+      id: 4,
+      title: "Vintage Camera Collection",
+      seller: "PhotoVintage_Store",
+      sellerRating: 4.6,
+      image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=300&fit=crop",
+      currentBid: "$1,250",
+      endTime: "4h 45m",
+      bidders: 9,
+      views: 189,
+      watchers: 32,
+      category: "Electronics"
+    },
+    {
+      id: 5,
+      title: "Rare Book First Edition",
+      seller: "BookWorm_Classics",
+      sellerRating: 5.0,
+      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=300&fit=crop",
+      currentBid: "$1,890",
+      endTime: "8h",
+      bidders: 11,
+      views: 267,
+      watchers: 54,
+      category: "Books"
+    },
+    {
+      id: 6,
+      title: "Limited Edition Sneakers",
+      seller: "Sneaker_Haven",
+      sellerRating: 4.8,
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop",
+      currentBid: "$450",
+      endTime: "6h 30m",
+      bidders: 18,
+      views: 523,
+      watchers: 89,
+      category: "Fashion"
     }
   ];
 
@@ -144,14 +192,31 @@ export default function Index() {
                   alt={auction.title}
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
+                <Badge className="absolute top-3 left-3 rounded-full bg-background/90 backdrop-blur-sm text-foreground border-0">
+                  {auction.category}
+                </Badge>
                 <div className="absolute top-3 right-3 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
                   <Clock className="w-3 h-3 text-warning" />
                   <span className="text-xs font-medium">{auction.endTime}</span>
                 </div>
               </div>
               
-              <CardHeader>
-                <CardTitle className="text-xl">{auction.title}</CardTitle>
+              <CardHeader className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pastel-mint to-pastel-blue flex items-center justify-center text-xs font-semibold">
+                    {auction.seller[0]}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-muted-foreground truncate">
+                      by {auction.seller}
+                    </p>
+                    <div className="flex items-center gap-1">
+                      <span className="text-warning text-xs">★</span>
+                      <span className="text-xs font-medium">{auction.sellerRating}</span>
+                    </div>
+                  </div>
+                </div>
+                <CardTitle className="text-lg leading-tight">{auction.title}</CardTitle>
                 <div className="flex items-center justify-between pt-2">
                   <div>
                     <p className="text-xs text-muted-foreground">Current Bid</p>
@@ -177,8 +242,9 @@ export default function Index() {
                     {auction.watchers} watching
                   </span>
                 </div>
-                <Link to="/auctions">
+                <Link to="/login">
                   <Button className="w-full rounded-full" variant="default">
+                    <Gavel className="mr-2 h-4 w-4" />
                     Place Bid
                   </Button>
                 </Link>
