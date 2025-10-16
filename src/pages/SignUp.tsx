@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +11,7 @@ import { Eye, EyeOff, Gavel, ShoppingBag, Store, Shield } from "lucide-react";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -20,8 +22,13 @@ const SignUp = () => {
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement registration logic
-    console.log("Sign up attempted with:", formData);
+    // Simulate signup - in real app this would call an API
+    const userData = {
+      name: formData.name,
+      email: formData.email,
+      role: formData.role as "buyer" | "seller" | "admin",
+    };
+    login(userData);
     navigate("/");
   };
 

@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   Sparkles, 
   TrendingUp, 
@@ -12,10 +13,20 @@ import {
   Clock, 
   Users,
   Heart,
-  Eye
+  Eye,
+  LogOut,
+  User
 } from "lucide-react";
 
 export default function Index() {
+  const { user, logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   const featuredAuctions = [
     {
       id: 1,
@@ -126,6 +137,45 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pastel-blue via-background to-pastel-lavender">
+      {/* Header with Auth */}
+      <header className="container mx-auto px-4 py-6">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <Gavel className="w-8 h-8 text-primary" />
+            <span className="text-2xl font-bold">AI Auction House</span>
+          </div>
+          
+          {isAuthenticated ? (
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pastel-mint to-pastel-blue flex items-center justify-center">
+                  <User className="w-4 h-4" />
+                </div>
+                <div className="hidden md:block">
+                  <p className="text-sm font-medium">{user?.name}</p>
+                  <p className="text-xs text-muted-foreground capitalize">{user?.role}</p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLogout}
+                className="rounded-full"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Link to="/login">
+              <Button variant="outline" className="rounded-full">
+                Sign In
+              </Button>
+            </Link>
+          )}
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 animate-fade-in">
         <div className="text-center space-y-6 max-w-4xl mx-auto">
@@ -264,28 +314,30 @@ export default function Index() {
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20">
-        <Card className="border-0 bg-gradient-to-r from-pastel-pink/30 via-pastel-lavender/30 to-pastel-blue/30 backdrop-blur-sm">
-          <CardContent className="p-12 text-center space-y-6">
-            <h2 className="text-4xl font-bold">Ready to Start Your Auction Journey?</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Join thousands of sellers and buyers who trust our platform for secure, efficient, and profitable auctions.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <Link to="/signup">
-                <Button size="lg" className="rounded-full px-8">
-                  Get Started Free
-                </Button>
-              </Link>
-              <Link to="/login">
-                <Button size="lg" variant="ghost" className="rounded-full px-8">
-                  Sign In
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      {!isAuthenticated && (
+        <section className="container mx-auto px-4 py-20">
+          <Card className="border-0 bg-gradient-to-r from-pastel-pink/30 via-pastel-lavender/30 to-pastel-blue/30 backdrop-blur-sm">
+            <CardContent className="p-12 text-center space-y-6">
+              <h2 className="text-4xl font-bold">Ready to Start Your Auction Journey?</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Join thousands of sellers and buyers who trust our platform for secure, efficient, and profitable auctions.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+                <Link to="/signup">
+                  <Button size="lg" className="rounded-full px-8">
+                    Get Started Free
+                  </Button>
+                </Link>
+                <Link to="/login">
+                  <Button size="lg" variant="ghost" className="rounded-full px-8">
+                    Sign In
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+      )}
     </div>
   );
 }
