@@ -15,6 +15,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 
 const menuItems = [
   { title: "Home", url: "/", icon: Home },
+  { title: "Seller Dashboard", url: "/seller-dashboard", icon: BarChart3 },
+  { title: "Buyer Dashboard", url: "/buyer-dashboard", icon: ShoppingCart },
   { 
     title: "Auctions", 
     icon: Package,
