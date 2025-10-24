@@ -19,6 +19,9 @@ import AuctionListing from "./pages/AuctionListing";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import Billing from "./pages/Billing";
+import AddProducts from "./pages/seller/AddProducts";
+import AuctionHouse from "./pages/seller/AuctionHouse";
+import OrderFulfillment from "./pages/seller/OrderFulfillment";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +67,9 @@ const App = () => {
                     <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
                     <Route path="/auctions" element={<Auctions />} />
                     <Route path="/create-listing" element={<CreateListing />} />
+                    <Route path="/add-products" element={<AddProducts />} />
+                    <Route path="/auction-house" element={<AuctionHouse />} />
+                    <Route path="/order-fulfillment" element={<OrderFulfillment />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
                   </Routes>

@@ -13,20 +13,30 @@ import {
 } from "@/components/ui/sidebar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-const menuItems = [
-  { title: "Home", url: "/", icon: Home },
-  { title: "Seller Dashboard", url: "/seller-dashboard", icon: BarChart3 },
-  { title: "Buyer Dashboard", url: "/buyer-dashboard", icon: ShoppingCart },
+type MenuItem = {
+  title: string;
+  url?: string;
+  icon: any;
+  badge?: string;
+  subItems?: Array<{
+    title: string;
+    url: string;
+    badge?: string;
+  }>;
+};
+
+const menuItems: MenuItem[] = [
+  { title: "Home", url: "/seller-dashboard", icon: Home },
   { 
     title: "Auctions", 
     icon: Package,
     subItems: [
-      { title: "Auction House", url: "/auctions", badge: "5" },
-      { title: "Create Listing", url: "/create-listing" },
+      { title: "Auction House", url: "/auction-house", badge: "5" },
+      { title: "Orders", url: "/order-fulfillment", badge: "12" },
+      { title: "Products", url: "/products" },
+      { title: "Customers", url: "/customers" },
     ]
   },
-  { title: "Orders", url: "/orders", icon: ShoppingCart, badge: "2" },
-  { title: "Customers", url: "/customers", icon: Users },
   { title: "Content", url: "/content", icon: FileText },
   { title: "Finances", url: "/finances", icon: DollarSign },
   { title: "Analytics", url: "/analytics", icon: BarChart3 },
