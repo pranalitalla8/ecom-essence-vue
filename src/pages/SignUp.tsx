@@ -29,7 +29,12 @@ const SignUp = () => {
       role: formData.role as "buyer" | "seller" | "admin",
     };
     login(userData);
-    navigate("/");
+    // Navigate based on role
+    if (formData.role === "buyer") {
+      navigate("/auctions");
+    } else {
+      navigate("/seller-dashboard");
+    }
   };
 
   const handleGoogleSignIn = () => {

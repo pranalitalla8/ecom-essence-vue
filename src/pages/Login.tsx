@@ -24,7 +24,8 @@ const Login = () => {
       role: "buyer" as const,
     };
     login(userData);
-    navigate("/");
+    // Navigate to auctions for buyers
+    navigate("/auctions");
   };
 
   const handleGoogleSignIn = () => {

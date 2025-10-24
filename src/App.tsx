@@ -15,13 +15,22 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import Index from "./pages/Index";
+import AuctionListing from "./pages/AuctionListing";
+import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
+import Billing from "./pages/Billing";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const location = useLocation();
   const publicRoutes = ["/", "/login", "/signup", "/forgot-password"];
+  const buyerRoutes = ["/auctions", "/product/:id", "/checkout", "/billing"];
   const isPublicRoute = publicRoutes.includes(location.pathname);
+  const isBuyerRoute = buyerRoutes.some(route => {
+    const pattern = new RegExp(`^${route.replace(/:\w+/g, '[^/]+')}$`);
+    return pattern.test(location.pathname);
+  }) || location.pathname.startsWith("/product/");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -34,6 +43,14 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+          </Routes>
+        ) : isBuyerRoute ? (
+          <Routes>
+            <Route path="/auctions" element={<AuctionListing />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/billing" element={<Billing />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         ) : (
           <SidebarProvider defaultOpen>
