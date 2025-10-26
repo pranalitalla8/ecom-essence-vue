@@ -26,17 +26,17 @@ type MenuItem = {
 };
 
 const menuItems: MenuItem[] = [
-  { title: "Home", url: "/seller-dashboard", icon: Home },
+  { title: "Home", url: "/", icon: Home },
   { 
     title: "Auctions", 
     icon: Package,
     subItems: [
       { title: "Auction House", url: "/auction-house", badge: "5" },
-      { title: "Orders", url: "/order-fulfillment", badge: "12" },
-      { title: "Products", url: "/products" },
-      { title: "Customers", url: "/customers" },
+      { title: "Create Listing", url: "/create-listing" },
     ]
   },
+  { title: "Orders", url: "/order-fulfillment", icon: ShoppingCart, badge: "2" },
+  { title: "Customers", url: "/customers", icon: Users },
   { title: "Content", url: "/content", icon: FileText },
   { title: "Finances", url: "/finances", icon: DollarSign },
   { title: "Analytics", url: "/analytics", icon: BarChart3 },

@@ -54,37 +54,43 @@ export default function OrderFulfillment() {
 
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
-          <CardContent className="flex items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-muted-foreground mb-1">Pending Pickups</p>
-              <p className="text-3xl font-bold">3</p>
-            </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning/10">
-              <Package className="h-6 w-6 text-warning" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-muted-foreground mb-1">Scheduled</p>
-              <p className="text-3xl font-bold">6</p>
-            </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-info/10">
-              <Clock className="h-6 w-6 text-info" />
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning/10">
+                <Package className="h-6 w-6 text-warning" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Pending Pickups</p>
+                <p className="text-3xl font-bold">5</p>
+              </div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="flex items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-muted-foreground mb-1">Completed</p>
-              <p className="text-3xl font-bold">3</p>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-info/10">
+                <Clock className="h-6 w-6 text-info" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Scheduled</p>
+                <p className="text-3xl font-bold">4</p>
+              </div>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-success/10">
-              <CheckCircle className="h-6 w-6 text-success" />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-success/10">
+                <CheckCircle className="h-6 w-6 text-success" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Completed</p>
+                <p className="text-3xl font-bold">3</p>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -95,7 +101,7 @@ export default function OrderFulfillment() {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input placeholder="Search by customer name, auction title, or order ID..." className="pl-9" />
         </div>
-        <Select defaultValue="all">
+        <Select defaultValue="scheduled">
           <SelectTrigger className="w-[180px]">
             <SelectValue />
           </SelectTrigger>
@@ -112,7 +118,7 @@ export default function OrderFulfillment() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b bg-muted/50">
+              <tr className="border-b">
                 <th className="p-4 text-left text-sm font-semibold">Order ID</th>
                 <th className="p-4 text-left text-sm font-semibold">Customer</th>
                 <th className="p-4 text-left text-sm font-semibold">Auction Title</th>
@@ -124,7 +130,7 @@ export default function OrderFulfillment() {
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order.id} className="border-b hover:bg-muted/20">
+                <tr key={order.id} className="border-b hover:bg-muted/20 transition-colors">
                   <td className="p-4 text-sm font-medium">{order.id}</td>
                   <td className="p-4">
                     <div>
@@ -133,14 +139,14 @@ export default function OrderFulfillment() {
                     </div>
                   </td>
                   <td className="p-4">
-                    <div className="text-sm">{order.auction}</div>
+                    <div className="text-sm font-medium">{order.auction}</div>
                     <div className="text-xs text-muted-foreground">{order.items} item(s)</div>
                   </td>
                   <td className="p-4 text-sm">{order.auctionEnded}</td>
                   <td className="p-4">
-                    <Badge variant="outline" className="bg-info/10 text-info border-info/20">
+                    <Badge className="bg-info/10 text-info border-info/20">
                       <Clock className="mr-1 h-3 w-3" />
-                      {order.status}
+                      Scheduled
                     </Badge>
                   </td>
                   <td className="p-4">
@@ -150,7 +156,7 @@ export default function OrderFulfillment() {
                   <td className="p-4">
                     <div className="flex items-center gap-2">
                       <Button variant="outline" size="sm">Edit Slot</Button>
-                      <Button variant="default" size="sm" className="bg-success hover:bg-success/90">
+                      <Button size="sm" className="bg-success hover:bg-success/90 text-success-foreground">
                         Mark Complete
                       </Button>
                     </div>
